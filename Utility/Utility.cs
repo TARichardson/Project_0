@@ -20,12 +20,7 @@ namespace Utility
         SubmitClose,
         OpenAccountPage,
         ListAccountPage,
-        SubmitOpenBusiness,
-        SubmitOpenChecking,
-        SubmitOpenTerm,
-        OpenBusinessPage,
-        OpenLoanPage,
-        OpenTermPage,
+        CloseCurrentAccountPage,
         CloseAccountPage
     };
     public enum AccountType
@@ -63,13 +58,13 @@ namespace Utility
         {
             Console.WriteLine("Enter your First Name:");
             FirstName = Console.ReadLine();
-            Step = Step + 1;
+            Step += 1;
         }
         public void InputTwo()
         {
             Console.WriteLine("Enter your Last Name:");
             LastName = Console.ReadLine();
-            Step = Step + 1;
+            Step += 1;
         }
         public void ResetStep()
         {
@@ -103,13 +98,13 @@ namespace Utility
         {
             Console.WriteLine("Enter your User Name:");
             UserName = Console.ReadLine();
-            Step = Step + 1;
+            Step += 1;
         }
         public void InputTwo()
         {
             Console.WriteLine("Enter your Password:");
             Password = Console.ReadLine();
-            Step = Step + 1;
+            Step += 1;
         }
         public void ResetStep()
         {
@@ -145,7 +140,7 @@ namespace Utility
             if (tempNum > -1 && tempNum < 4)
             {
                 Type = (AccountType)Enum.Parse(typeof(AccountType), tempNum.ToString(), true);
-                Step = Step + 1;
+                Step += 1;
             }
             else
             {
@@ -157,7 +152,7 @@ namespace Utility
         {
             Console.WriteLine("Enter your Starting Balance:");
             Balance = float.Parse(Console.ReadLine());
-            Step = Step + 1;
+            Step += 1;
         }
         public void ResetStep()
         {
@@ -171,14 +166,7 @@ namespace Utility
         }
         public State Submit()
         {
-            if (Type == AccountType.BusinessAccount)
-            { return State.SubmitOpenBusiness; }
-            else if (Type == AccountType.CheckingAccount)
-            { return State.SubmitOpenChecking; }
-            else
-            {
-                return State.SubmitOpenTerm;
-            }
+           return State.SubmitOpen;
         }
     }
 

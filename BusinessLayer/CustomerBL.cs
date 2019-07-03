@@ -10,7 +10,7 @@ namespace BusinessLayer
 {
     public class CustomerBL
     {
-        CustomerDL customerDL = new CustomerDL();
+        private CustomerDL customerDL = new CustomerDL();
 
         public void Create(Customer newCustomer)
         {

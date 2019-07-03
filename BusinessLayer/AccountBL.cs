@@ -10,7 +10,7 @@ namespace BusinessLayer
 {
     public class AccountBL
     {
-        AccountDL accountDL = new AccountDL();
+        private AccountDL accountDL = new AccountDL();
 
         public void Create(int customerID, TermAccount newAccount)
         {

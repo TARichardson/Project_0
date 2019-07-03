@@ -10,7 +10,7 @@ namespace BusinessLayer
 {
     class TransactionBL
     {
-        TransactionDL transactionDL = new TransactionDL();
+        private TransactionDL transactionDL = new TransactionDL();
 
         public void Create(int accountID, Transaction newTransaction)
         {
