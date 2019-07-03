@@ -61,7 +61,13 @@ namespace TARichardson.Project0.console
                 {
                     case State.CustomerPage:
                         ui.WriteSection();
+                        ui.ProcessInfo(app.CurrentCustomer);
                         return ui.ProcessState(app.CurrentCustomer);
+                    case State.ListAccountPage:
+                        ui.WriteSection();
+                        ui.ProcessInfo(app.CurrentCustomer);
+                        ui.ProcessInfo(app.CurrentCustomer.Accounts);
+                        return ui.ProcessState();
                     case State.AccountPage:
                         ui.WriteSection();
                         ui.ProcessInfo(app.CurrentCustomer);
@@ -69,25 +75,36 @@ namespace TARichardson.Project0.console
                         return ui.ProcessState(app.CurrentCustomer.CurrentAccount);
                     case State.OpenAccountPage:
                         ui.WriteSection();
+                        ui.ProcessInfo(app.CurrentCustomer);
                         return ui.ProcessState();
                     case State.CloseAccountPage:
                         return true;
                     case State.SubmitOpen:
-                        if (ui.GetOpen.Type == AccountType.TermAccount)
-                        {
-                            app.CurrentCustomer.OpenAccount(new TermAccount() {
-                                Balances = ui.GetOpen.Balance,
-                                Type = ui.GetOpen.Type,
-                                AccountID = 201,
-                                InterestRate = 10,
-                                PageMax = 10,
-                                Transactions = new List<Transaction>(),
-                                Matrity = false
-                            });
-                        }
-                        else if (ui.GetOpen.Type == AccountType.LoanAccount)
-                        {
-                            app.CurrentCustomer.OpenAccount(new LoanAccount() {
+                        switch (ui.GetOpen.Type)
+                        { 
+                            case AccountType.TermAccount:
+                                app.CurrentCustomer.OpenAccount(new TermAccount() {
+                                    Balances = ui.GetOpen.Balance,
+                                    Type = ui.GetOpen.Type,
+                                    AccountID = 201,
+                                    InterestRate = 10,
+                                    PageMax = 10,
+                                    Transactions = new List<Transaction>(),
+                                    Matrity = false
+                                });
+                                break;
+                            case AccountType.LoanAccount:
+                                app.CurrentCustomer.OpenAccount(new LoanAccount() {
+                                    Balances = ui.GetOpen.Balance,
+                                    Type = ui.GetOpen.Type,
+                                    AccountID = 201,
+                                    InterestRate = 10,
+                                    PageMax = 10,
+                                    Transactions = new List<Transaction>()
+                                });
+                                break;
+                            case AccountType.CheckingAccount:
+                            app.CurrentCustomer.OpenAccount(new CheckingAccount() {
                                 Balances = ui.GetOpen.Balance,
                                 Type = ui.GetOpen.Type,
                                 AccountID = 201,
@@ -95,17 +112,24 @@ namespace TARichardson.Project0.console
                                 PageMax = 10,
                                 Transactions = new List<Transaction>()
                             });
-                        }
-                        else
-                        {
-                            app.CurrentCustomer.OpenAccount(new Account() {
-                                Balances = ui.GetOpen.Balance,
-                                Type = ui.GetOpen.Type,
-                                AccountID = 201,
-                                InterestRate = 10,
-                                PageMax = 10,
-                                Transactions = new List<Transaction>()
-                            });
+                            break;
+                            case AccountType.BusinessAccount:
+                                app.CurrentCustomer.OpenAccount(new BusinessAccount()
+                                {
+                                    Balances = ui.GetOpen.Balance,
+                                    Type = ui.GetOpen.Type,
+                                    AccountID = 201,
+                                    InterestRate = 10,
+                                    PageMax = 10,
+                                    Transactions = new List<Transaction>()
+                                });
+                                break;
+                            default:
+                                ui.WriteSection();
+                                Console.WriteLine("Error couldn't create a new Account.");
+                                Console.WriteLine("Returning to Customer Page.");
+                                ui.CurrentState = State.CustomerPage;
+                                return true;
                         }
                         ui.CurrentState = State.AccountPage;
                         return true;

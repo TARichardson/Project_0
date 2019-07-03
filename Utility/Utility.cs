@@ -135,18 +135,25 @@ namespace Utility
         public void InputOne()
         {
             Console.WriteLine("Enter your Account Type");
-            Console.WriteLine("(0) CheckingAccount\n (1)LoanAccount\n (2)TermAccount\n (3)BusinessAccount");
-            int tempNum = Int32.Parse(Console.ReadLine());
-            if (tempNum > -1 && tempNum < 4)
-            {
-                Type = (AccountType)Enum.Parse(typeof(AccountType), tempNum.ToString(), true);
-                Step += 1;
-            }
-            else
+            Console.WriteLine("\t(0)CheckingAccount\n\t(1)LoanAccount\n\t(2)TermAccount\n\t(3)BusinessAccount");
+            try {
+                int tempNum = Int32.Parse(Console.ReadLine());
+
+                if (tempNum > -1 && tempNum < 4)
+                {
+                    Type = (AccountType)Enum.Parse(typeof(AccountType), tempNum.ToString(), true);
+                    Step += 1;
+                }
+                else
+                {
+                    Console.WriteLine("invalid input");
+
+                }
+            }catch(Exception)
             {
                 Console.WriteLine("invalid input");
-
             }
+
         }
         public void InputTwo()
         {

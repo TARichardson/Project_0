@@ -7,22 +7,16 @@ using Utility;
 
 namespace Entities
 {
-    public class TermAccount : ITermAccount
+    public class TermAccount : Account, ITermAccount
     {
-        public int AccountID { get; set; }
-        public float InterestRate { get; set; }
-        public int PageMax { get; set; }
-        public List<Transaction> Transactions { get; set; }
         public bool Matrity { get; set; }
-        public float Balances { get; set; }
-        public AccountType Type { get; set; }
 
-        public bool WithDraw(float sum)
+        public override bool WithDraw(float sum)
         {
-            float newBal = Balances - sum;
-            if ((newBal > 0 || Type == AccountType.BusinessAccount) && Matrity)
+            float newBal = base.Balances - sum;
+            if (newBal > 0 && Matrity)
             {
-                Balances = newBal;
+                base.Balances = newBal;
                 return true;
             }
             else
@@ -30,17 +24,6 @@ namespace Entities
                 return false;
             }
         }
-        public bool Deposit(float sum)
-        {
-            Balances += sum;
-            return true;
-        }
-        public Transaction DisplayTransaction(int index)
-        {
-            return Transactions[index];
-        }
-
-        public bool Transfer(Account id, float sum) { return true; }
 
     }
 }

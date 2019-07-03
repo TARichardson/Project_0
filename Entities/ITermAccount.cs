@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Entities
 {
-    public interface ITermAccount : IAccount
+    public interface ITermAccount
     {
         bool Matrity { get; set; }
     }

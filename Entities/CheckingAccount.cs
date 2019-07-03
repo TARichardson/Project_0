@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Utility;
 
 namespace Entities
 {
-    public interface ILoanAccount
+    public class CheckingAccount : Account
     {
-        float LoanAmount { get; set; }
-        bool LoanTransfered { get; set; }
-        bool PayLoad(float sum);
     }
 }

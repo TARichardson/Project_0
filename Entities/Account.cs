@@ -13,13 +13,13 @@ namespace Entities
         public float InterestRate { get; set; }
         public int PageMax { get; set; }
         public List<Transaction> Transactions { get; set; }
-        public float Balances { get; set; }
+        public virtual float Balances { get; set; }
         public AccountType Type { get; set; }
 
-        public bool WithDraw(float sum)
+        public virtual bool WithDraw(float sum)
         {
             float newBal = Balances - sum;
-            if (newBal > 0 || Type == AccountType.BusinessAccount)
+            if (newBal > 0)
             {
                 Balances = newBal;
                 return true;
@@ -29,12 +29,12 @@ namespace Entities
                 return false;
             }
         }
-        public bool Deposit(float sum)
+        public virtual bool Deposit(float sum)
         {
             Balances += sum;
             return true;
         }
-        public Transaction DisplayTransaction(int index)
+        public Transaction GetTransaction(int index)
         {
             return Transactions[index];
         }

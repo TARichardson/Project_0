@@ -71,7 +71,7 @@ namespace TARichardson.Project0.console
 
         public bool ProcessState(Customer customer)
         {
-            Console.WriteLine("(O)pen to open new Account, (C)lose to close a Account, (L)ist to list all Accounts, (E)xit to exit");
+            Console.WriteLine("\t(O)pen to open new Account\n\t(C)lose to close a Account\n\t(L)ist to list all Accounts\n\t(E)xit to exit");
             Console.WriteLine("Enter choice: ");
             string input = Console.ReadLine().ToLower();
             switch (input)
@@ -90,7 +90,7 @@ namespace TARichardson.Project0.console
                 case "l":
                     CurrentState = State.ListAccountPage;
                     Console.WriteLine("To Account List Page . . . ");
-                    return false;
+                    return true;
                 case "exit":
                 case "e":
                     CurrentState = State.LogOutPage;
@@ -103,7 +103,7 @@ namespace TARichardson.Project0.console
         }
         public bool ProcessState(IAccount account)
         {
-            Console.WriteLine("(B)ack to Customer, (C)lose to close a Account, (T)Transfer to another Account, (E)xit to exit");
+            Console.WriteLine("\t(B)ack to Customer\n\t(C)lose to close a Account\n\t(T)Transfer to another Account\n\t(E)xit to exit");
             Console.WriteLine("Enter choice: ");
             string input = Console.ReadLine().ToLower();
             switch (input)
@@ -111,7 +111,7 @@ namespace TARichardson.Project0.console
                 case "back":
                 case "b":
                     CurrentState = State.CustomerPage;
-                    Console.WriteLine("To Opening Account Page . . . ");
+                    Console.WriteLine("To Customer Account Page . . . ");
                     return true;
                 case "close":
                 case "c":
@@ -122,7 +122,7 @@ namespace TARichardson.Project0.console
                 case "l":
                     CurrentState = State.ListAccountPage;
                     Console.WriteLine("To Account List Page . . . ");
-                    return false;
+                    return true;
                 case "exit":
                 case "e":
                     CurrentState = State.LogOutPage;
@@ -132,7 +132,6 @@ namespace TARichardson.Project0.console
                     Console.WriteLine("Your input was invalid.");
                     return true;
             }
-            return true;
         }
 
         public bool ProcessState()
@@ -150,6 +149,11 @@ namespace TARichardson.Project0.console
                     break;
                 case State.WelcomePage:
                     return ProcessWelcomeState();
+                case State.ListAccountPage:
+                    Console.WriteLine("Press any key to continue back to the Customer Page . .");
+                    Console.ReadLine();
+                    CurrentState = State.CustomerPage;
+                    return true;
                 default:
                     return true;
             }
@@ -158,19 +162,21 @@ namespace TARichardson.Project0.console
         public bool ProcessInfo(Customer customer)
         {
             Console.WriteLine($"Customer ID: {customer.CustomerID}");
-            Console.WriteLine($"First Name: {customer.FirstName} Last Name: {customer.LastName}");
+            Console.WriteLine($"Account Holder: {customer.FirstName} {customer.LastName}");
             Console.WriteLine($"Number of Accounts: {customer.Accounts.Count()}");
             return true;
         }
         public bool ProcessInfo(IAccount account)
         {
-            Console.WriteLine($"Account ID: {account.AccountID}");
-            Console.WriteLine($"Account Type: {account.Type} Starting Balance: {account.Balances}");
-            Console.WriteLine($"Number of Transactions: {account.Transactions.Count()}");
+            Console.WriteLine($"\tAccount ID: {account.AccountID}");
+            Console.WriteLine($"\tAccount Type: {account.Type} Starting Balance: {account.Balances}");
+            Console.WriteLine($"\tNumber of Transactions: {account.Transactions.Count()}");
             return true;
         }
         public bool ProcessInfo(List<IAccount> accounts)
         {
+            WriteSection();
+            Console.WriteLine("Account List:");
             foreach (IAccount account in accounts)
             {
                 ProcessInfo(account);
@@ -179,13 +185,16 @@ namespace TARichardson.Project0.console
         }
         public bool ProcessInfo(Transaction transaction)
         {
-            Console.WriteLine($"Transaction ID: {transaction.TransactionID}");
-            Console.WriteLine($"Transaction Type: {transaction.Type}");
-            Console.WriteLine($"Log: {transaction.Log}");
+            Console.WriteLine($"\t\tTransaction ID: {transaction.TransactionID}");
+            Console.WriteLine($"\t\tTransaction Type: {transaction.Type}");
+            Console.WriteLine($"\t\tLog: {transaction.Log}");
             return true;
         }
         public bool ProcessInfo(List<Transaction> transactions)
         {
+            WriteSection();
+            Console.WriteLine("Transaction List:");
+            WriteSection();
             foreach (Transaction transaction in transactions)
             {
                 ProcessInfo(transaction);

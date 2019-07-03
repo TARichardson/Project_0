@@ -18,7 +18,7 @@ namespace Entities
 
         bool WithDraw(float sum);
         bool Deposit(float sum);
-        Transaction DisplayTransaction(int index);
+        Transaction GetTransaction(int index);
         bool Transfer(Account id, float sum);
     }
 }
