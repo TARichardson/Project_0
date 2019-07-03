@@ -7,22 +7,21 @@ using Utility;
 
 namespace Entities
 {
-    public class Account
+    public class Account : IAccount
     {
-
-        public bool CanOverDraft { get; set; }
+        public int AccountID { get; set; }
         public float InterestRate { get; set; }
         public int PageMax { get; set; }
-        List<Transaction> Transactions { get; set; }
-        public bool Matrity { get; set; }
+        public List<Transaction> Transactions { get; set; }
         public float Balances { get; set; }
         public AccountType Type { get; set; }
 
         public bool WithDraw(int sum)
         {
-            if (Matrity)
+            float newBal = Balances - sum;
+            if (newBal > 0 || Type == AccountType.BusinessAccount)
             {
-                Balances -= sum;
+                Balances = newBal;
                 return true;
             }
             else
@@ -39,13 +38,6 @@ namespace Entities
         {
             return Transactions[index];
         }
-
         public bool Transfer(Account id, int sum) { return true; }
-
-        public Account()
-        {
-
-        }
-
     }
 }

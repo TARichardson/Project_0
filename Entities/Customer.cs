@@ -8,18 +8,17 @@ namespace Entities
 {
     public class Customer
     {
+        int CustomerID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int PageMax { get; set; }
         public Account CurrentAccount { get; set; }
-        private List<Account> _accounts;
+        public List<Account> Accounts { get; set; }
         public bool OpenAccount(Account newAccount) { return true; }
         public bool CloseAccount(int id) { return true; }
-        public List<Account> DisplayAccounts(int page = 1)
+        public Account DisplayAccounts(int index)
         {
-            //List<Account> displayAccounts = new List<Account>();
-
-            return new List<Account>();
+            return Accounts[index];
         }
     }
 }

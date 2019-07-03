@@ -41,9 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Account.cs" />
     <Compile Include="App.cs" />
-    <Compile Include="BusinessAccount.cs" />
+    <Compile Include="Account.cs" />
     <Compile Include="ITermAccount.cs" />
     <Compile Include="TermAccount.cs" />
     <Compile Include="Customer.cs" />

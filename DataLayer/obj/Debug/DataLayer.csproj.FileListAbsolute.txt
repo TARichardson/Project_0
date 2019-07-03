@@ -1,0 +1,6 @@
+C:\Users\Admin\Documents\source\repos\TARichardson_Project0\DataLayer\bin\Debug\DataLayer.dll
+C:\Users\Admin\Documents\source\repos\TARichardson_Project0\DataLayer\bin\Debug\DataLayer.pdb
+C:\Users\Admin\Documents\source\repos\TARichardson_Project0\DataLayer\obj\Debug\DataLayer.csprojAssemblyReference.cache
+C:\Users\Admin\Documents\source\repos\TARichardson_Project0\DataLayer\obj\Debug\DataLayer.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Documents\source\repos\TARichardson_Project0\DataLayer\obj\Debug\DataLayer.dll
+C:\Users\Admin\Documents\source\repos\TARichardson_Project0\DataLayer\obj\Debug\DataLayer.pdb
