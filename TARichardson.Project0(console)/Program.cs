@@ -7,6 +7,8 @@ using System.Drawing;
 using Entities;
 using Utility;
 using System.IO;
+using System.Xml.Serialization;
+
 
 namespace TARichardson.Project0.console
 {
@@ -75,11 +77,18 @@ namespace TARichardson.Project0.console
         }
         static void Main(string[] args)
         {
-            string filename = @".\..\..\..\DB\test.txt";
-            StreamWriter sw = new StreamWriter(filename);
-            sw.WriteLine("StreamReader #1");
+            string filename = @".\..\..\..\DB\CustomersDB.xml";
+            XmlRootAttribute xRoot = new XmlRootAttribute();
+            xRoot.ElementName = "Customers";
+            xRoot.IsNullable = true;
 
-            sw.Close();
+            XmlSerializer reader =
+                new System.Xml.Serialization.XmlSerializer(typeof(Customer),xRoot);
+            System.IO.StreamReader file = new System.IO.StreamReader(filename);
+            Customer customers = (Customer)reader.Deserialize(file);
+            file.Close();
+
+           // Console.WriteLine($"{overview.Title} by {overview.Author}");
 
             while (app.Run)
             {
