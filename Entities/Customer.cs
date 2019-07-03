@@ -7,14 +7,14 @@ using System.Xml.Serialization;
 
 namespace Entities
 {
-    [Serializable, XmlRoot("Customers")]
+    //[Serializable, XmlRoot("Customer")]
     public class Customer
     {
-        [XmlAttribute("CustomerID")]
-        int CustomerID { get; set; }
-        [XmlAttribute("FirstName")]
+        [XmlElement(DataType = "int", ElementName = "CustomerID")]
+        public int CustomerID { get; set; }
+        [XmlElement(DataType = "string", ElementName = "FirstName")]
         public string FirstName { get; set; }
-        [XmlAttribute("LastName")]
+        [XmlElement(DataType = "string", ElementName = "LastName")]
         public string LastName { get; set; }
         public int PageMax { get; set; }
         public Account CurrentAccount { get; set; }

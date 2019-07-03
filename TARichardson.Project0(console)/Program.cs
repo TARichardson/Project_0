@@ -25,12 +25,13 @@ namespace TARichardson.Project0.console
         };
         static public bool Update()
         {
-            if (app.CurrentCustomer != null)
+            if (app.CurrentCustomer == null)
             {
                 if (ui.CurrentState == State.SubmitRegisterPage)
                 {
                     if (app.Register(new Customer()
                     {
+                        CustomerID = 104,
                         FirstName = ui.GetRegister.FirstName,
                         LastName = ui.GetRegister.LastName,
                         PageMax = 10,
@@ -77,16 +78,17 @@ namespace TARichardson.Project0.console
         }
         static void Main(string[] args)
         {
-            string filename = @".\..\..\..\DB\CustomersDB.xml";
-            XmlRootAttribute xRoot = new XmlRootAttribute();
-            xRoot.ElementName = "Customers";
-            xRoot.IsNullable = true;
+        //    string filename = @".\..\..\..\DB\CustomersDB.xml";
+        //    XmlRootAttribute xRoot = new XmlRootAttribute();
+        //    xRoot.ElementName = "Customers";
+        //    xRoot.IsNullable = true;
 
-            XmlSerializer reader =
-                new System.Xml.Serialization.XmlSerializer(typeof(Customer),xRoot);
-            System.IO.StreamReader file = new System.IO.StreamReader(filename);
-            Customer customers = (Customer)reader.Deserialize(file);
-            file.Close();
+        //    XmlSerializer reader = new XmlSerializer(typeof(Customer),xRoot);
+        //    FileStream file = new FileStream(filename, FileMode.Open);
+        //    Customer customers = (Customer)reader.Deserialize(file);
+        //    Console.WriteLine($"Customer First name {customers.FirstName}");
+
+        //    file.Close();
 
            // Console.WriteLine($"{overview.Title} by {overview.Author}");
 

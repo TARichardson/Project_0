@@ -1,9 +1,9 @@
-C:\Users\Admin\Documents\source\repos\TARichardson_Project0\Entities\obj\Debug\Entities.csproj.CoreCompileInputs.cache
 C:\Users\Admin\Documents\source\repos\TARichardson_Project0\Entities\bin\Debug\Entities.dll
 C:\Users\Admin\Documents\source\repos\TARichardson_Project0\Entities\bin\Debug\Entities.pdb
-C:\Users\Admin\Documents\source\repos\TARichardson_Project0\Entities\obj\Debug\Entities.dll
-C:\Users\Admin\Documents\source\repos\TARichardson_Project0\Entities\obj\Debug\Entities.pdb
-C:\Users\Admin\Documents\source\repos\TARichardson_Project0\Entities\obj\Debug\Entities.csprojAssemblyReference.cache
 C:\Users\Admin\Documents\source\repos\TARichardson_Project0\Entities\bin\Debug\Utility.dll
 C:\Users\Admin\Documents\source\repos\TARichardson_Project0\Entities\bin\Debug\Utility.pdb
+C:\Users\Admin\Documents\source\repos\TARichardson_Project0\Entities\obj\Debug\Entities.csprojAssemblyReference.cache
+C:\Users\Admin\Documents\source\repos\TARichardson_Project0\Entities\obj\Debug\Entities.csproj.CoreCompileInputs.cache
 C:\Users\Admin\Documents\source\repos\TARichardson_Project0\Entities\obj\Debug\Entities.csproj.CopyComplete
+C:\Users\Admin\Documents\source\repos\TARichardson_Project0\Entities\obj\Debug\Entities.dll
+C:\Users\Admin\Documents\source\repos\TARichardson_Project0\Entities\obj\Debug\Entities.pdb
