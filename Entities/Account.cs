@@ -16,7 +16,7 @@ namespace Entities
         public float Balances { get; set; }
         public AccountType Type { get; set; }
 
-        public bool WithDraw(int sum)
+        public bool WithDraw(float sum)
         {
             float newBal = Balances - sum;
             if (newBal > 0 || Type == AccountType.BusinessAccount)
@@ -29,7 +29,7 @@ namespace Entities
                 return false;
             }
         }
-        public bool Deposit(int sum)
+        public bool Deposit(float sum)
         {
             Balances += sum;
             return true;
@@ -38,6 +38,6 @@ namespace Entities
         {
             return Transactions[index];
         }
-        public bool Transfer(Account id, int sum) { return true; }
+        public bool Transfer(Account id, float sum) { return true; }
     }
 }

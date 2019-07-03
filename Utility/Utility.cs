@@ -19,6 +19,7 @@ namespace Utility
         SubmitOpen,
         SubmitClose,
         OpenAccountPage,
+        ListAccountPage,
         SubmitOpenBusiness,
         SubmitOpenChecking,
         SubmitOpenTerm,
@@ -129,10 +130,10 @@ namespace Utility
         public float Balance { get; set; }
         public AccountType Type { get; set; }
         public int Step { get; set; }
-        public OpenAccount(int step = 0)
+        public OpenAccount(int step = 0, AccountType type = AccountType.CheckingAccount)
         {
             Balance = 0;
-            Type = AccountType.CheckingAccount;
+            Type = type;
             Step = step;
         }
 

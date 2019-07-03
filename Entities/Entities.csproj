@@ -43,7 +43,9 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="Account.cs" />
+    <Compile Include="ILoanAccount.cs" />
     <Compile Include="ITermAccount.cs" />
+    <Compile Include="LoanAccount.cs" />
     <Compile Include="TermAccount.cs" />
     <Compile Include="Customer.cs" />
     <Compile Include="IAccount.cs" />

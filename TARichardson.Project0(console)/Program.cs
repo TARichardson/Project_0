@@ -67,7 +67,18 @@ namespace TARichardson.Project0.console
                     case State.CloseAccountPage:
                         return true;
                     case State.SubmitOpen:
-                       // app.CurrentCustomer.OpenAccount(new Account)
+                        if (ui.GetOpen.Type == AccountType.TermAccount)
+                        {
+                            app.CurrentCustomer.OpenAccount(new TermAccount());
+                        }
+                        else if (ui.GetOpen.Type == AccountType.LoanAccount)
+                        {
+                            app.CurrentCustomer.OpenAccount(new LoanAccount());
+                        }
+                        else
+                        {
+                            app.CurrentCustomer.OpenAccount(new Account());
+                        }
                         return true;
                     default:
                         return false;

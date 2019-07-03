@@ -16,9 +16,9 @@ namespace Entities
         float Balances { get; set; }
         AccountType Type { get; set; }
 
-        bool WithDraw(int sum);
-        bool Deposit(int sum);
+        bool WithDraw(float sum);
+        bool Deposit(float sum);
         Transaction DisplayTransaction(int index);
-        bool Transfer(Account id, int sum);
+        bool Transfer(Account id, float sum);
     }
 }

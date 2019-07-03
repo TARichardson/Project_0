@@ -20,6 +20,10 @@ namespace Entities
         public Account CurrentAccount { get; set; }
         public List<Account> Accounts { get; set; }
         public bool OpenAccount(Account newAccount) { return true; }
+        public bool OpenAccount(TermAccount newAccount) { return true; }
+
+        public bool OpenAccount(LoanAccount newAccount) { return true; }
+
         public bool CloseAccount(int id) { return true; }
         public Account DisplayAccounts(int index)
         {

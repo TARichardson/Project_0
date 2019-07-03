@@ -19,6 +19,7 @@ namespace TARichardson.Project0.console
         public State CurrentState { get; set; }
         public Register GetRegister { get => register; }
         public Login GetLogin { get => login; }
+        public OpenAccount GetOpen { get => open; }
 
         public IRegLog ProcessRegLogState(IRegLog reglog)
         {
@@ -77,17 +78,17 @@ namespace TARichardson.Project0.console
             {
                 case "open":
                 case "o":
-                    CurrentState = State.RegisterPage;
+                    CurrentState = State.OpenAccountPage;
                     Console.WriteLine("To Opening Account Page . . . ");
                     return true;
                 case "close":
                 case "c":
-                    CurrentState = State.LogInPage;
+                    CurrentState = State.CloseAccountPage;
                     Console.WriteLine("To Closing Account Page . . . ");
                     return true;
                 case "list":
                 case "l":
-                    CurrentState = State.LogOutPage;
+                    CurrentState = State.ListAccountPage;
                     Console.WriteLine("To Account List Page . . . ");
                     return false;
                 case "exit":
