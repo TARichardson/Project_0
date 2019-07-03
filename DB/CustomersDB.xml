@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Customers>
+	<Customer>
+		<CustomerID>101</CustomerID>
+		<FirstName>Troy</FirstName>
+		<LastName>Richardson</LastName>
+	</Customer>
+	<Customer>
+		<CustomerID>102</CustomerID>
+		<FirstName>Kim</FirstName>
+		<LastName>Lang</LastName>
+	</Customer>
+		<Customer>
+		<CustomerID>103</CustomerID>
+		<FirstName>Jane</FirstName>
+		<LastName>Smith</LastName>
+	</Customer>
+</Customers>

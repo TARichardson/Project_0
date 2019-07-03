@@ -1,6 +1,5 @@
 C:\Users\Admin\Documents\source\repos\TARichardson_Project0\Utility\bin\Debug\Utility.dll
 C:\Users\Admin\Documents\source\repos\TARichardson_Project0\Utility\bin\Debug\Utility.pdb
-C:\Users\Admin\Documents\source\repos\TARichardson_Project0\Utility\obj\Debug\Utility.csprojAssemblyReference.cache
 C:\Users\Admin\Documents\source\repos\TARichardson_Project0\Utility\obj\Debug\Utility.csproj.CoreCompileInputs.cache
 C:\Users\Admin\Documents\source\repos\TARichardson_Project0\Utility\obj\Debug\Utility.dll
 C:\Users\Admin\Documents\source\repos\TARichardson_Project0\Utility\obj\Debug\Utility.pdb

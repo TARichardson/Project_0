@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 using Entities;
 using Utility;
+using System.IO;
 
 namespace TARichardson.Project0.console
 {
@@ -74,6 +75,11 @@ namespace TARichardson.Project0.console
         }
         static void Main(string[] args)
         {
+            string filename = @".\..\..\..\DB\test.txt";
+            StreamWriter sw = new StreamWriter(filename);
+            sw.WriteLine("StreamReader #1");
+
+            sw.Close();
 
             while (app.Run)
             {

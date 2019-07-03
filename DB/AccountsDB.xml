@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Accounts>
+  <Account>
+    <CustomerID>101</CustomerID>
+    <AccountID>101</AccountID>
+    <InterestRate>10</InterestRate>
+    <Balances>252</Balances>
+    <Type>Checking</Type>
+  </Account>
+  <Account>
+    <CustomerID>101</CustomerID>
+    <AccountID>102</AccountID>
+    <InterestRate>10</InterestRate>
+    <Balances>5000</Balances>
+    <Type>Business</Type>
+  </Account>
+  <Account>
+    <CustomerID>102</CustomerID>
+    <AccountID>103</AccountID>
+    <InterestRate>10</InterestRate>
+    <Balances>5000</Balances>
+    <Type>Business</Type>
+  </Account>
+  <Account>
+    <CustomerID>102</CustomerID>
+    <AccountID>104</AccountID>
+    <InterestRate>10</InterestRate>
+    <Balances>2000</Balances>
+    <Type>Loan</Type>
+  </Account>
+  <Account>
+    <CustomerID>103</CustomerID>
+    <AccountID>105</AccountID>
+    <InterestRate>10</InterestRate>
+    <Balances>2000</Balances>
+    <Type>Term</Type>
+  </Account>
+</Accounts>
