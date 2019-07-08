@@ -20,6 +20,18 @@ namespace Entities
         public int PageMax { get; set; }
         public IAccount CurrentAccount { get; set; }
         public List<IAccount> Accounts { get; set; }
+        public List<IAccount> AccountPage(int page = 1)
+        {
+            List<IAccount> Result = new List<IAccount>();
+            int offsetIndex = (page - 1) * PageMax;
+            int offset = page * PageMax;
+            for (int index = offsetIndex; index < Accounts.Count && index < offset; index++)
+            {
+                Result.Add(Accounts[index]);
+            }
+            return Result;
+        }
+
         public bool OpenAccount(IAccount newAccount)
         {
             Accounts.Add(newAccount);
@@ -40,9 +52,19 @@ namespace Entities
             }
             return true;
         }
-        public IAccount DisplayAccounts(int index)
+        public bool CloseCurrentAccounts()
         {
-            return Accounts[index];
+            return Accounts.Remove(CurrentAccount);
+        }
+        public bool MakeCurrentAccounts(int id)
+        {
+            CurrentAccount = Accounts[id];
+            return CurrentAccount != null ? true : false; 
+
+        }
+        public void CustomerUpdate()
+        {
+
         }
     }
 }

@@ -71,7 +71,11 @@ namespace TARichardson.Project0.console
 
         public bool ProcessState(Customer customer)
         {
-            Console.WriteLine("\t(O)pen to open new Account\n\t(C)lose to close a Account\n\t(L)ist to list all Accounts\n\t(E)xit to exit");
+            Console.WriteLine("\t(O)pen to open new Account" +
+                "\n\t(C)lose to close a Account" +
+                "\n\t(V)iew a Account" +
+                "\n\t(L)ist to list all Accounts" +
+                "\n\t(E)xit to exit");
             Console.WriteLine("Enter choice: ");
             string input = Console.ReadLine().ToLower();
             switch (input)
@@ -85,6 +89,11 @@ namespace TARichardson.Project0.console
                 case "c":
                     CurrentState = State.CloseAccountPage;
                     Console.WriteLine("To Closing Account Page . . . ");
+                    return true;
+                case "view":
+                case "v":
+                    CurrentState = State.SelectAccountPage;
+                    Console.WriteLine("To Select Account Page . . . ");
                     return true;
                 case "list":
                 case "l":
@@ -103,7 +112,13 @@ namespace TARichardson.Project0.console
         }
         public bool ProcessState(IAccount account)
         {
-            Console.WriteLine("\t(B)ack to Customer\n\t(C)lose to close a Account\n\t(T)Transfer to another Account\n\t(E)xit to exit");
+            Console.WriteLine("\t(B)ack to Customer" +
+                "\n\t(W)ithdraw from account" +
+                "\n\t(D)eposit to account" +
+                "\n\t(T)ransfer funds to another Account" +
+                "\n\t(V)iew transactions" +
+                "\n\t(C)lose to close the Account" +
+                "\n\t(E)xit to exit");
             Console.WriteLine("Enter choice: ");
             string input = Console.ReadLine().ToLower();
             switch (input)
@@ -112,6 +127,24 @@ namespace TARichardson.Project0.console
                 case "b":
                     CurrentState = State.CustomerPage;
                     Console.WriteLine("To Customer Account Page . . . ");
+                    return true;
+                case "withdraw":
+                case "w":
+                    CurrentState = State.WithDrawPage;
+                    Console.WriteLine("To WithDraw Page . . .");
+                    return true;
+                case "desposit":
+                case "d":
+                    CurrentState = State.DepositPage;
+                    Console.WriteLine("To Deposit Page . . .");
+                    return true;
+                case "transfer":
+                case "t":
+                    CurrentState = State.TransferPage;
+                    return true;
+                case "view":
+                case "v":
+                    CurrentState = State.ListAccountTransactionPage;
                     return true;
                 case "close":
                 case "c":
@@ -139,20 +172,28 @@ namespace TARichardson.Project0.console
             switch (CurrentState)
             {
                 case State.RegisterPage:
+                    ((Register)register).ResetValues();
                     register = (Register)ProcessRegLogState(register);
                     break;
                 case State.LogInPage:
+                    ((Login)login).ResetValues();
                     login = (Login)ProcessRegLogState(login);
                     break;
                 case State.OpenAccountPage:
+                    ((OpenAccount)open).ResetValues();
                     open = (OpenAccount)ProcessRegLogState(open);
                     break;
                 case State.WelcomePage:
                     return ProcessWelcomeState();
                 case State.ListAccountPage:
-                    Console.WriteLine("Press any key to continue back to the Customer Page . .");
+                    Console.WriteLine("Press enter/return key to continue back to the Customer Page . .");
                     Console.ReadLine();
                     CurrentState = State.CustomerPage;
+                    return true;
+                case State.ListAccountTransactionPage:
+                    Console.WriteLine("Press enter/return key to continue back to the Account Page . .");
+                    Console.ReadLine();
+                    CurrentState = State.AccountPage;
                     return true;
                 default:
                     return true;
@@ -205,7 +246,118 @@ namespace TARichardson.Project0.console
         {
             Console.WriteLine("________________________________________");
         }
+        public int SelectAccount(string str, List<IAccount> accounts, bool toView = true, bool forTransfer = false, IAccount currentAccount = null)
+        {
+            WriteSection();
+            Console.WriteLine($"Choose a account from list to {str}:");
+            int index = 0;
+            foreach (IAccount account in accounts)
+            {
+                string Option = forTransfer && account == currentAccount
+                    ? "\tAccount you are transfering from: "
+                    : $"\tOption ({index}): ";
 
+                Console.WriteLine(Option);
+                ProcessInfo(account);
+                index++;
+            }
+            Console.WriteLine("\tChoice (c)ancel to cancel.");
+            string tempStr = Console.ReadLine();
+            if (tempStr.ToLower() == "c" || tempStr.ToLower() == "cancel")
+            {
+                CurrentState = State.CustomerPage;
+                return -1;
+            }
+            try
+            {
+                int tempNum = Int32.Parse(tempStr);
+                if (tempNum > -1 && tempNum < accounts.Count())
+                {
+                    if(currentAccount != null && currentAccount != accounts[tempNum] || currentAccount == null)
+                    {
+                        CurrentState = toView ? State.AccountPage : State.ListAccountPage;
+                        return tempNum;
+                    }
+                    else
+                    {
+                        Console.WriteLine("invalid input");
+                        Console.WriteLine("can't transfer to same account");
+                        return -1;
+                    }
+
+
+                }
+                else
+                {
+                    Console.WriteLine("invalid input");
+                    return -1;
+
+                }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("invalid input");
+                return -1;
+            }
+        }
+
+        public bool ProcessWithDrawState(IAccount account)
+        {
+            int sum = HowMuch("withdraw");
+            return sum > 0 ? account.WithDraw(sum) : true;
+        }
+        public bool ProcessDepositState(IAccount account)
+        {
+            int sum = HowMuch("deposit");
+            return sum > 0 ? account.Deposit(sum) : true;
+        }
+        public bool ProcessTransferState(IAccount fromAccount, IAccount toAccount)
+        {
+            int sum = HowMuch("Transfer");
+            if( sum > 0 ? fromAccount.WithDraw(sum) : false)
+            {
+                if (toAccount.Deposit(sum))
+                {
+                    return true;
+                }
+                else
+                {
+                    fromAccount.Deposit(sum);
+                }
+            }
+            return true;
+        }
+        public int HowMuch(string str)
+        {
+            WriteSection();
+            Console.WriteLine($"\tHow much do you want to ({str}) or choose (c)ancel to cancel:");
+            string tempStr = Console.ReadLine();
+            if (tempStr.ToLower() == "c" || tempStr.ToLower() == "cancel")
+            {
+                CurrentState = State.AccountPage;
+                return -1;
+            }
+            try
+            {
+                int tempNum = Int32.Parse(tempStr);
+                 if (tempNum > 0)
+                {
+                    CurrentState = State.ListAccountPage;
+                    return tempNum;
+                }
+                else
+                {
+                    Console.WriteLine("invalid input");
+                    return -1;
+
+                }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("invalid input");
+                return -1;
+            }
+        }
 
     }
 }

@@ -11,6 +11,12 @@ namespace Entities
     {
         int AccountID { get; set; }
         float InterestRate { get; set; }
+        float StartingBalance { get; set; }
+        float EndingBalance { get; set; }
+        AccountStatus Status {get;set;}
+        DateTime AccountOpenDate { get; set; }
+        DateTime BeginningStatment { get; set; }
+        DateTime NextStatment { get; set; }
         int PageMax { get; set; }
         List<Transaction> Transactions { get; set; }
         float Balances { get; set; }
@@ -19,6 +25,8 @@ namespace Entities
         bool WithDraw(float sum);
         bool Deposit(float sum);
         Transaction GetTransaction(int index);
+        List<Transaction> TransactionsPage(int page = 1);
         bool Transfer(Account id, float sum);
+        void AccountUpdate();
     }
 }

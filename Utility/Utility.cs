@@ -20,9 +20,20 @@ namespace Utility
         SubmitClose,
         OpenAccountPage,
         ListAccountPage,
+        ListAccountTransactionPage,
         CloseCurrentAccountPage,
-        CloseAccountPage
+        CloseAccountPage,
+        SelectAccountPage,
+        WithDrawPage,
+        DepositPage,
+        TransferPage
     };
+    public enum AccountStatus
+    {
+        Active,
+        Inactive,
+        Frozen,
+    }
     public enum AccountType
     {
         CheckingAccount,
@@ -30,6 +41,18 @@ namespace Utility
         TermAccount,
         BusinessAccount
     };
+
+    public enum TransactionType
+    {
+        WDW,
+        DPS,
+        TRF,
+        OPN,
+        CLO,
+        PLD,
+        INR
+    }
+
 
     public interface IRegLog
     {
@@ -53,7 +76,11 @@ namespace Utility
             LastName = "";
             Step = step;
         }
-
+        public void ResetValues()
+        {
+            FirstName = "";
+            LastName = "";
+        }
         public void InputOne()
         {
             Console.WriteLine("Enter your First Name:");
@@ -93,7 +120,11 @@ namespace Utility
             Password = "";
             Step = step;
         }
-
+        public void ResetValues()
+        {
+            UserName = "";
+            Password = "";
+        }
         public void InputOne()
         {
             Console.WriteLine("Enter your User Name:");
@@ -125,9 +156,9 @@ namespace Utility
         public float Balance { get; set; }
         public AccountType Type { get; set; }
         public int Step { get; set; }
-        public OpenAccount(int step = 0, AccountType type = AccountType.CheckingAccount)
+        public OpenAccount(int step = 0, AccountType type = AccountType.CheckingAccount, float balance = 0)
         {
-            Balance = 0;
+            Balance = balance;
             Type = type;
             Step = step;
         }
@@ -165,7 +196,11 @@ namespace Utility
         {
             Step = 0;
         }
-
+        public void ResetValues(AccountType type = AccountType.CheckingAccount, float balance = 0)
+        {
+            Balance = balance;
+            Type = type;
+        }
         public void Print()
         {
             Console.WriteLine($"Account Type: {Type} Starting Balance: {Balance}");

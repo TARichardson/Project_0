@@ -11,6 +11,12 @@ namespace Entities
     {
         public int AccountID { get; set; }
         public float InterestRate { get; set; }
+        public float StartingBalance { get; set; }
+        public float EndingBalance { get; set; }
+        public AccountStatus Status { get; set; }
+        public DateTime BeginningStatment { get; set; }
+        public DateTime NextStatment { get; set; }
+        public DateTime AccountOpenDate { get; set; }
         public int PageMax { get; set; }
         public List<Transaction> Transactions { get; set; }
         public virtual float Balances { get; set; }
@@ -21,6 +27,13 @@ namespace Entities
             float newBal = Balances - sum;
             if (newBal > 0)
             {
+                Transactions.Add(new Transaction()
+                {
+                    Type = TransactionType.WDW,
+                    TransactionID = Transactions.Count(),
+                    Date = DateTime.Now,
+                    Log = $"Withdrawal of ${sum} from ${Balances} | New Balances ${newBal}"
+                });
                 Balances = newBal;
                 return true;
             }
@@ -31,13 +44,57 @@ namespace Entities
         }
         public virtual bool Deposit(float sum)
         {
+            float oldBalances = Balances;
             Balances += sum;
+            Transactions.Add(new Transaction()
+            {
+                Type = TransactionType.DPS,
+                TransactionID = Transactions.Count(),
+                Date = DateTime.Now,
+                Log = $"Deposit of ${sum} to ${oldBalances} | New Balances ${Balances}"
+            });
+           
             return true;
         }
         public Transaction GetTransaction(int index)
         {
             return Transactions[index];
         }
+        public List<Transaction> TransactionsPage(int page = 1)
+        {
+            List<Transaction> Result = new List<Transaction>();
+            int offsetIndex = (page - 1) * PageMax;
+            int offset = page * PageMax;
+            for (int index = offsetIndex; index < Transactions.Count && index < offset; index++)
+            {
+                Result.Add(Transactions[index]);
+            }
+
+            return Result;
+        }
+
         public bool Transfer(Account id, float sum) { return true; }
+        public virtual void AccountUpdate()
+        {
+            DateTime current = DateTime.Now;
+
+            if(current >= NextStatment)
+            {
+                EndingBalance = Balances;
+                float minBalanceHeld = StartingBalance >= EndingBalance ? EndingBalance : StartingBalance;
+                float sum = minBalanceHeld * (InterestRate / 100);
+                float oldBalances = Balances;
+                Balances += sum;
+                Transactions.Add(new Transaction()
+                {
+                    Type = TransactionType.INR,
+                    TransactionID = Transactions.Count(),
+                    Date = DateTime.Now,
+                    Log = $"Interest added, of the sum of ${sum} to ${oldBalances} | New Balances ${Balances}"
+                });
+                BeginningStatment = current;
+                NextStatment = current.AddDays(30);
+            }
+        }
     }
 }
