@@ -90,7 +90,16 @@ namespace TARichardson.Project0.console
                         }
                         else
                         {
-                            Console.WriteLine("Your account doesn't support overdrafts");
+                            if (app.CurrentCustomer.CurrentAccount.Type == AccountType.TermAccount)
+                            {
+                                Console.WriteLine("Your account has not Matured");
+
+                            }
+                            else
+                            {
+                                Console.WriteLine("Your account doesn't support overdrafts");
+
+                            }
                             return true;
 
                         }
@@ -117,11 +126,27 @@ namespace TARichardson.Project0.console
                         int selectionClose = ui.SelectAccount("Close", app.CurrentCustomer.Accounts, false);
                         if (selectionClose > -1)
                         {
-                            app.CurrentCustomer.CloseAccount(selectionClose);
+                            if(app.CurrentCustomer.CloseAccount(selectionClose))
+                            {
+                                Console.WriteLine("Account closed.");
+
+                            }
+                                else
+                            {
+                                Console.WriteLine("Can not closed account with balance above/below $0.");
+                            }
                         }
                         return true;
                     case State.CloseCurrentAccountPage:
-                        app.CurrentCustomer.CloseCurrentAccounts();
+                        if (app.CurrentCustomer.CloseCurrentAccounts())
+                        {
+                            Console.WriteLine("Current account closed.");
+
+                        }
+                        else
+                        {
+                            Console.WriteLine("Can not closed account with balance above/below $0.");
+                        }
                         ui.CurrentState = State.CustomerPage;
                         return true;
                     case State.SelectAccountPage:
@@ -155,13 +180,14 @@ namespace TARichardson.Project0.console
                                                 Date = CurrentDT,
                                                 Log = $"{ui.GetOpen.Type} Account Open with balances of {ui.GetOpen.Balance}"
                                             }},
-                                    Matrity = false
+                                    Maturity = false
                                 });
 
                                 break;
                             case AccountType.LoanAccount:
                                 app.CurrentCustomer.OpenAccount(new LoanAccount() {
-                                    Balances = ui.GetOpen.Balance,
+                                    LoanAmount = ui.GetOpen.Balance,
+                                    LoanTransfered = false,
                                     Type = ui.GetOpen.Type,
                                     AccountID = app.CurrentCustomer.Accounts.Count + 200,
                                     InterestRate = 10,
@@ -176,9 +202,12 @@ namespace TARichardson.Project0.console
                                                 Type = TransactionType.OPN,
                                                 TransactionID = 0,
                                                 Date = CurrentDT,
-                                                Log = $"{ui.GetOpen.Type} Account Open with balances of {ui.GetOpen.Balance}"
+                                                Log = $"{ui.GetOpen.Type} Account Open with LoanAmount of {ui.GetOpen.Balance} approved"
                                             }},
                                 });
+                                int index = app.CurrentCustomer.Accounts.Count - 1;
+                                LoanAccount currentLoan = (LoanAccount)app.CurrentCustomer.Accounts[index];
+                                app.CurrentCustomer.CurrentAccount.Deposit(currentLoan.Transfer());
                                 break;
                             case AccountType.CheckingAccount:
                             app.CurrentCustomer.OpenAccount(new CheckingAccount() {
@@ -228,7 +257,18 @@ namespace TARichardson.Project0.console
                                 ui.CurrentState = State.CustomerPage;
                                 return true;
                         }
+                        ui.ProcessState();
                         ui.CurrentState = State.AccountPage;
+                        return true;
+                    case State.UpdateAccountPage:
+                        foreach (Account account in app.CurrentCustomer.Accounts)
+                        {
+                            account.AccountUpdate();
+                        }
+                        ui.WriteSection();
+                        Console.WriteLine("All accounts updated.");
+                        Console.WriteLine("Returning to Customer Page.");
+                        ui.CurrentState = State.CustomerPage;
                         return true;
                     default:
                         return false;

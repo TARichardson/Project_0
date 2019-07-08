@@ -9,12 +9,14 @@ namespace Entities
 {
     public class TermAccount : Account, ITermAccount
     {
-        public bool Matrity { get; set; }
+        public bool Maturity { get; set; }
+        public DateTime DateOfMaturity { get; set; }
+
 
         public override bool WithDraw(float sum)
         {
             float newBal = base.Balances - sum;
-            if (newBal > 0 && Matrity)
+            if (newBal >= 0 && Maturity)
             {
                 base.Balances = newBal;
                 return true;
@@ -24,6 +26,16 @@ namespace Entities
                 return false;
             }
         }
+        public override void AccountUpdate()
+        {
+            base.AccountUpdate();
+            DateTime current = DateTime.Now;
+            if( current >= DateOfMaturity)
+            {
+                Maturity = true;
+            }
+        }
+
 
     }
 }

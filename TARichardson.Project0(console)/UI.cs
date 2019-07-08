@@ -19,7 +19,11 @@ namespace TARichardson.Project0.console
         public State CurrentState { get; set; }
         public Register GetRegister { get => register; }
         public Login GetLogin { get => login; }
-        public OpenAccount GetOpen { get => open; }
+        public OpenAccount GetOpen
+        {
+            get => open;
+            set{ open = value;}
+        }
 
         public IRegLog ProcessRegLogState(IRegLog reglog)
         {
@@ -75,6 +79,7 @@ namespace TARichardson.Project0.console
                 "\n\t(C)lose to close a Account" +
                 "\n\t(V)iew a Account" +
                 "\n\t(L)ist to list all Accounts" +
+                "\n\t(U)pdate all Accounts" +
                 "\n\t(E)xit to exit");
             Console.WriteLine("Enter choice: ");
             string input = Console.ReadLine().ToLower();
@@ -100,6 +105,11 @@ namespace TARichardson.Project0.console
                     CurrentState = State.ListAccountPage;
                     Console.WriteLine("To Account List Page . . . ");
                     return true;
+                case "update":
+                case "u":
+                    CurrentState = State.UpdateAccountPage;
+                    Console.WriteLine("To Update Account Page . . . ");
+                    return true;
                 case "exit":
                 case "e":
                     CurrentState = State.LogOutPage;
@@ -117,6 +127,7 @@ namespace TARichardson.Project0.console
                 "\n\t(D)eposit to account" +
                 "\n\t(T)ransfer funds to another Account" +
                 "\n\t(V)iew transactions" +
+                "\n\t(G)et loan from bank" +
                 "\n\t(C)lose to close the Account" +
                 "\n\t(E)xit to exit");
             Console.WriteLine("Enter choice: ");
@@ -146,6 +157,11 @@ namespace TARichardson.Project0.console
                 case "v":
                     CurrentState = State.ListAccountTransactionPage;
                     return true;
+                case "get":
+                case "g":
+                    open = new OpenAccount(1, AccountType.LoanAccount, 0);
+                    CurrentState = State.OpenAccountPage;
+                    return true;
                 case "close":
                 case "c":
                     CurrentState = State.CloseCurrentAccountPage;
@@ -172,16 +188,16 @@ namespace TARichardson.Project0.console
             switch (CurrentState)
             {
                 case State.RegisterPage:
-                    ((Register)register).ResetValues();
                     register = (Register)ProcessRegLogState(register);
                     break;
                 case State.LogInPage:
-                    ((Login)login).ResetValues();
                     login = (Login)ProcessRegLogState(login);
                     break;
                 case State.OpenAccountPage:
-                    ((OpenAccount)open).ResetValues();
                     open = (OpenAccount)ProcessRegLogState(open);
+                    break;
+                case State.SubmitOpen:
+                    open = new OpenAccount(0, AccountType.CheckingAccount, 0);
                     break;
                 case State.WelcomePage:
                     return ProcessWelcomeState();
@@ -210,7 +226,7 @@ namespace TARichardson.Project0.console
         public bool ProcessInfo(IAccount account)
         {
             Console.WriteLine($"\tAccount ID: {account.AccountID}");
-            Console.WriteLine($"\tAccount Type: {account.Type} Starting Balance: {account.Balances}");
+            Console.WriteLine($"\tAccount Type: {account.Type} Balance: {account.Balances}");
             Console.WriteLine($"\tNumber of Transactions: {account.Transactions.Count()}");
             return true;
         }

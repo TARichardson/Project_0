@@ -26,7 +26,8 @@ namespace Utility
         SelectAccountPage,
         WithDrawPage,
         DepositPage,
-        TransferPage
+        TransferPage,
+        UpdateAccountPage,
     };
     public enum AccountStatus
     {
@@ -37,9 +38,9 @@ namespace Utility
     public enum AccountType
     {
         CheckingAccount,
-        LoanAccount,
         TermAccount,
-        BusinessAccount
+        BusinessAccount,
+        LoanAccount,
     };
 
     public enum TransactionType
@@ -166,11 +167,11 @@ namespace Utility
         public void InputOne()
         {
             Console.WriteLine("Enter your Account Type");
-            Console.WriteLine("\t(0)CheckingAccount\n\t(1)LoanAccount\n\t(2)TermAccount\n\t(3)BusinessAccount");
+            Console.WriteLine("\t(0)CheckingAccount\n\t(1)TermAccount\n\t(2)BusinessAccount");
             try {
                 int tempNum = Int32.Parse(Console.ReadLine());
 
-                if (tempNum > -1 && tempNum < 4)
+                if (tempNum > -1 && tempNum < 3)
                 {
                     Type = (AccountType)Enum.Parse(typeof(AccountType), tempNum.ToString(), true);
                     Step += 1;

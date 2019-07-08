@@ -10,6 +10,7 @@ namespace Entities
     {
         float LoanAmount { get; set; }
         bool LoanTransfered { get; set; }
-        bool PayLoad(float sum);
+        bool PayLoan(float sum);
+        float Transfer();
     }
 }

@@ -8,6 +8,7 @@ namespace Entities
 {
     public interface ITermAccount
     {
-        bool Matrity { get; set; }
+        bool Maturity { get; set; }
+        DateTime DateOfMaturity { get; set; }
     }
 }

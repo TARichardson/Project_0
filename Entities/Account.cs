@@ -25,7 +25,7 @@ namespace Entities
         public virtual bool WithDraw(float sum)
         {
             float newBal = Balances - sum;
-            if (newBal > 0)
+            if (newBal >= 0)
             {
                 Transactions.Add(new Transaction()
                 {
@@ -64,8 +64,8 @@ namespace Entities
         {
             List<Transaction> Result = new List<Transaction>();
             int offsetIndex = (page - 1) * PageMax;
-            int offset = page * PageMax;
-            for (int index = offsetIndex; index < Transactions.Count && index < offset; index++)
+            int offset = Transactions.Count - (page * PageMax);
+            for (int index = (Transactions.Count - 1) - offsetIndex; index > -1 && index > offset; index--)
             {
                 Result.Add(Transactions[index]);
             }
@@ -73,7 +73,6 @@ namespace Entities
             return Result;
         }
 
-        public bool Transfer(Account id, float sum) { return true; }
         public virtual void AccountUpdate()
         {
             DateTime current = DateTime.Now;
@@ -96,5 +95,19 @@ namespace Entities
                 NextStatment = current.AddDays(30);
             }
         }
+
+        public List<Transaction> TransactionRange(DateTime fromDate, DateTime toDate)
+        {
+            List<Transaction> Result = new List<Transaction>();
+            foreach(Transaction transaction in Transactions)
+            {
+                if(transaction.Date >= fromDate && transaction.Date <= toDate)
+                {
+                    Result.Add(transaction);
+                }
+            }
+            return Result;
+        }
+
     }
 }

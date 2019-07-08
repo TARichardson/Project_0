@@ -26,7 +26,7 @@ namespace Entities
         bool Deposit(float sum);
         Transaction GetTransaction(int index);
         List<Transaction> TransactionsPage(int page = 1);
-        bool Transfer(Account id, float sum);
+        List<Transaction> TransactionRange(DateTime fromDate, DateTime toDate);
         void AccountUpdate();
     }
 }

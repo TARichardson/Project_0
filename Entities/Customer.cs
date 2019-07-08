@@ -35,26 +35,37 @@ namespace Entities
         public bool OpenAccount(IAccount newAccount)
         {
             Accounts.Add(newAccount);
-            CurrentAccount = newAccount;
+            if (newAccount.Type != AccountType.LoanAccount)
+            {
+                CurrentAccount = newAccount;
+            }
             return true;
         }
 
         public bool CloseAccount(int id)
         {
-            if (CurrentAccount == Accounts[id])
+            if (CurrentAccount.Balances == 0)
             {
-                CurrentAccount = null;
+                if (CurrentAccount == Accounts[id])
+                {
+                    CurrentAccount = null;
+                }
+                Accounts.RemoveAt(id);
+                if (CurrentAccount == null && Accounts.Count() != 0)
+                {
+                    CurrentAccount = Accounts[0];
+                }
+                return true;
             }
-            Accounts.RemoveAt(id);
-            if(CurrentAccount == null && Accounts.Count() != 0)
-            {
-                CurrentAccount = Accounts[0];
-            }
-            return true;
+            return false;
         }
         public bool CloseCurrentAccounts()
         {
-            return Accounts.Remove(CurrentAccount);
+            if (CurrentAccount.Balances == 0)
+            {
+                return Accounts.Remove(CurrentAccount);
+            }
+            return false;
         }
         public bool MakeCurrentAccounts(int id)
         {
